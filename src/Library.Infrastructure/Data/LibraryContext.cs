@@ -9,6 +9,7 @@ namespace Library.Infrastructure.Data
         {
 
         }
-        public DbSet<Book> Books { get; set; }
+        public DbSet<BookDb>? Books { get; set; }
+
     }
 }
