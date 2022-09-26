@@ -11,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 
+builder.Services.AddScoped<IReaderService, ReaderService>();
+builder.Services.AddScoped<IReaderRepository, ReaderRepository>();
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -22,7 +26,6 @@ builder.Services.AddDbContext<LibraryContext>(
         option.UseSqlServer(builder.Configuration.GetConnectionString("LibraryCS"));
         option.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
-
 );
 
 var app = builder.Build();
