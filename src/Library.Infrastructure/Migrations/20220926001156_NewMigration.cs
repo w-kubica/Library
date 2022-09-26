@@ -4,7 +4,7 @@
 
 namespace Library.Infrastructure.Migrations
 {
-    public partial class createbooktable : Migration
+    public partial class NewMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,7 @@ namespace Library.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    TotalCopy = table.Column<int>(type: "int", nullable: false),
-                    BorrowedCopy = table.Column<int>(type: "int", nullable: false)
+                    IsBorrowed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

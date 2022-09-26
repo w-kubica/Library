@@ -1,12 +1,22 @@
-using Library.API.Installers;
+using Library.Application.Repositories;
+using Library.Application.Services;
+using Library.Domain.Repositories;
+using Library.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.InstallServicesInAssembly(builder.Configuration);
+//builder.Services.AddTransient<IBookService,BookService>();
 
-
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<LibraryContext>(
+    option => option.UseSqlServer(builder.Configuration.GetConnectionString("LibraryCS"))
+    );
 
 var app = builder.Build();
 
@@ -23,4 +33,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run(); 
