@@ -10,6 +10,5 @@ namespace Library.Domain.Repositories
         Task UpdateAsync(Book book);
         Task DeleteAsync(Book book);
 
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Library.Domain.Models
+namespace Library.Infrastructure.DTO
 {
     [Table("Books")]
     public class BookDb

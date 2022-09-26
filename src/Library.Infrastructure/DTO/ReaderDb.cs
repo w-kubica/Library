@@ -1,4 +1,6 @@
-﻿namespace Library.Domain.Models
+﻿using Library.Domain.Models;
+
+namespace Library.Infrastructure.DTO
 {
     public class ReaderDb
     {

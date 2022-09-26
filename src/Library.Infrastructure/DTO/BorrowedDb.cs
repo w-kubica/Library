@@ -1,4 +1,4 @@
-﻿namespace Library.Domain.Models
+﻿namespace Library.Infrastructure.DTO
 {
     public class BorrowedDb
     {

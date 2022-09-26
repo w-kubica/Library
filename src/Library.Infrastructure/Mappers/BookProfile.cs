@@ -1,4 +1,5 @@
 ﻿using Library.Domain.Models;
+using Library.Infrastructure.DTO;
 
 namespace Library.Infrastructure.Mappers
 {

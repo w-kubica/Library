@@ -11,12 +11,6 @@ namespace Library.Infrastructure.Data
         }
         public DbSet<BookDb>? Books { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .UseSqlServer();
-        }
-
       
     }
 }

@@ -28,22 +28,23 @@ namespace Library.Infrastructure.Repositories
 
         public async Task AddAsync(Book book)
         {
-            await _context.Books.AddAsync(book.ToInfrastructure());
+            var dto = book.ToInfrastructure();
+            await _context.Books.AddAsync(dto);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Book book)
         {
-            _context.Books.Update(book.ToInfrastructure());
+            var dto = book.ToInfrastructure();
+            _context.Books.Update(dto);
             await _context.SaveChangesAsync();
-            await Task.CompletedTask;
         }
 
         public async Task DeleteAsync(Book book)
         {
-            _context.Books.Remove(book.ToInfrastructure());
+            var dto = book.ToInfrastructure();
+            _context.Books.Remove(dto);
             await _context.SaveChangesAsync();
-            await Task.CompletedTask;
         }
     }
 }
