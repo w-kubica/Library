@@ -10,7 +10,7 @@ namespace Library.Infrastructure.Data
 
         }
         public DbSet<BookDb>? Books { get; set; }
+        public DbSet<ReaderDb>? Readers { get; set; }
 
-      
     }
 }
