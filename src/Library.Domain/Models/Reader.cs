@@ -11,6 +11,11 @@
             (Id, Pesel, ReaderType) = (id, pesel, readerType);
         }
 
+        public Reader(int id,  ReaderType readerType)
+        {
+            (Id, ReaderType) = (id, readerType);
+        }
+
         public Reader()
         {
 

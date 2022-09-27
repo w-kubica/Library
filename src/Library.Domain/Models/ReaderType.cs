@@ -2,8 +2,8 @@
 {
     public enum ReaderType
     {
-        Student,
-        Lecturer,
-        Employee
+        Student = 0,
+        Lecturer = 1,
+        Employee = 2,
     }
 }

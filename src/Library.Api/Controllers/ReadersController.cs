@@ -38,7 +38,7 @@ namespace Library.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(ReaderDto updateReader)
+        public async Task<ActionResult> Update(UpdateReaderDto updateReader)
         {
             await _readerService.UpdateReaderAsync(updateReader);
             return NoContent();

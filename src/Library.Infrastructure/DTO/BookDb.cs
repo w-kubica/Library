@@ -24,5 +24,7 @@ namespace Library.Infrastructure.DTO
         {
             (Id, Title, IsBorrowed) = (id, title, isBorrowed);
         }
+
+
     }
 }
