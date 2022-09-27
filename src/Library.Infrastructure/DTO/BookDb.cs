@@ -12,17 +12,27 @@ namespace Library.Infrastructure.DTO
         [Required]
         [MaxLength(100)]
         public string Title { get; set; }
+        public int TotalCopy { get; set; }
+        public int BorrowedCopy { get; set; }
+        public int ToBorrow { get; set; }
 
-        public bool IsBorrowed { get; set; }
+        public int SetToBorrow(int totalCopy, int borrowedCopy, int toBorrow)
+        {
+            TotalCopy = totalCopy;
+            BorrowedCopy = borrowedCopy;
+            toBorrow = totalCopy - borrowedCopy;
+            ToBorrow = toBorrow;
+            return ToBorrow;
+        }
 
         public BookDb()
         {
 
         }
 
-        public BookDb(int id, string title, bool isBorrowed)
+        public BookDb(int id, string title, int totalCopy, int borrowedCopy, int toBorrow)
         {
-            (Id, Title, IsBorrowed) = (id, title, isBorrowed);
+            (Id, Title, TotalCopy, BorrowedCopy, ToBorrow) = (id, title, totalCopy, borrowedCopy, SetToBorrow(totalCopy,borrowedCopy,toBorrow));
         }
 
 
