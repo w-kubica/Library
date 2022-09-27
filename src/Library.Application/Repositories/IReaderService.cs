@@ -1,8 +1,6 @@
 ﻿using Library.Application.DTO;
-using Library.Domain.Models;
-using Library.Infrastructure.DTO;
 
-namespace Library.Domain.Repositories
+namespace Library.Application.Repositories
 {
     public interface IReaderService
     {

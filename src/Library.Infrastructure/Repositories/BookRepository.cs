@@ -36,7 +36,14 @@ namespace Library.Infrastructure.Repositories
         public async Task UpdateAsync(Book book)
         {
             var dto = book.ToInfrastructure();
-            _context.Books.Update(dto);
+            _context.Entry(dto).Property(x => x.TotalCopy).IsModified = true;
+            _context.Entry(dto).Property(x => x.Title).IsModified = true;
+
+            var existingbook = await GetByIdAsync(book.Id);
+            dto.ToBorrow = dto.TotalCopy - existingbook.BorrowedCopy;
+
+            //var dto = book.ToInfrastructure();
+            //_context.Books.Update(dto);
             await _context.SaveChangesAsync();
         }
 

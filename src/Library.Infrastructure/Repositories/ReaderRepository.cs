@@ -66,7 +66,7 @@ namespace Library.Infrastructure.Repositories
 
         public async Task UpdateAsync(Reader reader)
         {
-            var dto = reader.ToInfrastructureUpdate();
+            var dto = reader.ToInfrastructure();
             _context.Entry(dto).Property(x => x.ReaderType).IsModified = true;
 
             var existingReader = await GetByIdAsync(reader.Id);

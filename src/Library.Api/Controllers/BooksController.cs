@@ -36,7 +36,7 @@ namespace Library.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(BookDto updateBook)
+        public async Task<ActionResult> Update(UpdateBookDto updateBook)
         {
             await _bookService.UpdateBookAsync(updateBook);
             return NoContent();

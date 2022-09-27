@@ -1,6 +1,6 @@
 ﻿using Library.Domain.Models;
 
-namespace Library.Infrastructure.DTO
+namespace Library.Application.DTO
 {
     public class ReaderDto
     {

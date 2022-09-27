@@ -1,7 +1,7 @@
 ﻿using Library.Application.DTO;
 using Library.Application.Mappers;
+using Library.Application.Repositories;
 using Library.Domain.Repositories;
-using Library.Infrastructure.DTO;
 
 namespace Library.Application.Services
 {

@@ -8,8 +8,6 @@
         public int BorrowedCopy { get; set; }
         public int ToBorrow { get; set; }
 
-        
-
         public Book()
         {
 
@@ -19,5 +17,11 @@
         {
             (Id, Title, TotalCopy, BorrowedCopy, ToBorrow) = (id, title, totalCopy, borrowedCopy, toBorrow);
         }
+
+        public Book(int id, string title, int totalCopy)
+        {
+            (Id, Title, TotalCopy) = (id, title, totalCopy);
+        }
+
     }
 }

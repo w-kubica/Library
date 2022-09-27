@@ -32,7 +32,7 @@ namespace Library.Application.Services
             await _bookRepository.AddAsync(newbook);
         }
 
-        public async Task UpdateBookAsync(BookDto book)
+        public async Task UpdateBookAsync(UpdateBookDto book)
         {
             var updatebook = book.ToDomain();
             await _bookRepository.UpdateAsync(updatebook);

@@ -7,7 +7,7 @@ namespace Library.Application.Repositories
         Task<IEnumerable<BookDto>> GetBooksAsync();
         Task<BookDto> GetBookByIdAsync(int id);
         Task AddBookAsync(BookDto book);
-        Task UpdateBookAsync(BookDto book);
+        Task UpdateBookAsync(UpdateBookDto book);
         Task DeleteBookAsync(int id);
 
     }
