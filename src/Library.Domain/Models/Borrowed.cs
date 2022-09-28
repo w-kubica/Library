@@ -13,10 +13,12 @@
         public decimal OverdueFine { get; set; }
         public bool IsCharged { get; set; }
 
-        public Borrowed(int id, int readerId, int bookId, DateTime issuedDate, DateTime dueDate, DateTime dateReturned, bool borrowedStatus, int daysOfDelay, decimal overdueFine, bool isCharged)
+       
+
+        public Borrowed(int id, DateTime issuedDate, DateTime dueDate, DateTime dateReturned, bool borrowedStatus, int daysOfDelay, decimal overdueFine, bool isCharged)
         {
-            (Id, ReaderId, BookId, IssuedDate, DueDate, DateReturned, BorrowedStatus, DaysOfDelay, OverdueFine,
-                IsCharged) = (id, readerId, bookId, issuedDate, dueDate, dateReturned, borrowedStatus, daysOfDelay,
+            (Id, IssuedDate, DueDate, DateReturned, BorrowedStatus, DaysOfDelay, OverdueFine,
+                IsCharged) = (id, issuedDate, dueDate, dateReturned, borrowedStatus, daysOfDelay,
                 overdueFine, isCharged);
         }
 

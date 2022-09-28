@@ -9,6 +9,6 @@ namespace Library.Infrastructure.Mappers
             new(borrowed.Id, borrowed.ReaderId, borrowed.BookId, borrowed.IssuedDate, borrowed.DueDate, borrowed.DateReturned, borrowed.BorrowedStatus, borrowed.DaysOfDelay, borrowed.OverdueFine, borrowed.IsCharged);
 
         public static Borrowed ToDomain (this BorrowedDb borrowed) =>
-            new(borrowed.Id, borrowed.ReaderId, borrowed.BookId, borrowed.IssuedDate, borrowed.DueDate, borrowed.DateReturned, borrowed.BorrowedStatus, borrowed.DaysOfDelay, borrowed.OverdueFine, borrowed.IsCharged);
+            new(borrowed.Id, borrowed.IssuedDate, borrowed.DueDate, borrowed.DateReturned, borrowed.BorrowedStatus, borrowed.DaysOfDelay, borrowed.OverdueFine, borrowed.IsCharged);
     }
 }

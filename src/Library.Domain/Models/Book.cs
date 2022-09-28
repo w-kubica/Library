@@ -7,6 +7,7 @@
         public int TotalCopy { get; set; }
         public int BorrowedCopy { get; set; }
         public int ToBorrow { get; set; }
+        
 
         public Book()
         {
