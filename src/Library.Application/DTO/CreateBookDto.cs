@@ -1,4 +1,5 @@
-﻿namespace Library.Application.DTO
+﻿#pragma warning disable CS8618
+namespace Library.Application.DTO
 {
     public class CreateBookDto
     {

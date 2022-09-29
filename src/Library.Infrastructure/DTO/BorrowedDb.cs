@@ -1,4 +1,5 @@
-﻿namespace Library.Infrastructure.DTO
+﻿#pragma warning disable CS8618
+namespace Library.Infrastructure.DTO
 {
     public class BorrowedDb
     {

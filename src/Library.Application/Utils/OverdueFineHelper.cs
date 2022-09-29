@@ -1,7 +1,9 @@
-﻿using Library.Domain.Models;
+﻿using System.Diagnostics.CodeAnalysis;
+using Library.Domain.Models;
 
 namespace Library.Application.Utils
 {
+    [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
     public static class OverdueFineHelper
     {
         public static int CalculateDaysOfDelay(DateTime dateReturned, DateTime dueDate)

@@ -1,4 +1,5 @@
 ﻿using Library.Domain.Models;
+#pragma warning disable CS8618
 
 namespace Library.Application.DTO
 {

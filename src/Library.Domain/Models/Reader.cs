@@ -1,4 +1,5 @@
-﻿namespace Library.Domain.Models
+﻿#pragma warning disable CS8618
+namespace Library.Domain.Models
 {
     public class Reader
     {

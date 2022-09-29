@@ -32,7 +32,7 @@ namespace Library.Application.Services
             var newReader = reader.ToDomain();
             var pesel = newReader.Pesel;
 
-            var isValid = PeselValidatorHelper.IsValidPESEL(pesel);
+            var isValid = PeselValidatorHelper.IsValidPesel(pesel);
 
             if (!isValid)
             {
@@ -46,10 +46,6 @@ namespace Library.Application.Services
                 throw new Exception("This reader already exists.");
             }
 
-            if (newReader.ReaderType == null)
-            {
-                throw new Exception("Reader cannot have an empty reader type.");
-            }
             await _readerRepository.AddAsync(newReader);
         }
 

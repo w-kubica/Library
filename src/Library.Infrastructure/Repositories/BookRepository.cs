@@ -24,7 +24,8 @@ namespace Library.Infrastructure.Repositories
         public async Task<Book> GetByIdAsync(int id)
         {
             var book = await _context.Books.SingleOrDefaultAsync(x => x.Id == id);
-            return book.ToDomain();
+            if (book != null) return book.ToDomain();
+            else throw new Exception("Error");
         }
 
         public async Task AddAsync(Book book)

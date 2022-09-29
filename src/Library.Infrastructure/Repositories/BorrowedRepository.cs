@@ -25,7 +25,12 @@ namespace Library.Infrastructure.Repositories
         public async Task<Borrowed> GetByIdAsync(int id)
         {
             var borrowed = await _context.Borrowed.SingleOrDefaultAsync(x => x.Id == id);
-            return borrowed.ToDomain();
+            if (borrowed != null) 
+                return borrowed.ToDomain();
+            else
+            {
+                throw new Exception("Error");
+            }
         }
 
         public async Task AddAsync(Borrowed borrowed)

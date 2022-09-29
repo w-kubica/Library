@@ -2,7 +2,7 @@
 {
     public static class PeselValidatorHelper
     {
-        public static bool IsValidPESEL(this string input)
+        public static bool IsValidPesel(this string input)
         {
             bool result = false;
             if (IsDigit(input))
