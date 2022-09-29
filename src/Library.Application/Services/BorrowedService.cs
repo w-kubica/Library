@@ -35,36 +35,31 @@ namespace Library.Application.Services
 
         public async Task AddBorrowedAsync(CreateBorrowedDto borrowed)
         {
-            var readerIsExist = await _borrowedValidator.ReaderIsExists(borrowed.ToDomain());
+            var readerIsExists = await _borrowedValidator.ReaderIsExists(borrowed.ToDomain());
 
-            var bookIsExist = await _borrowedValidator.BookIsExists(borrowed.ToDomain());
+            var bookIsExists = await _borrowedValidator.BookIsExists(borrowed.ToDomain());
 
-            if (bookIsExist && readerIsExist)
+            if (bookIsExists && readerIsExists)
             {
                 var book = await _bookRepository.GetByIdAsync(borrowed.BookId);
-                var bookToBorrow = book.ToBorrow;
+                var booksToBorrow = book.ToBorrow;
                 var borrowedCopy = book.BorrowedCopy;
-                if (bookToBorrow > 0)
+                if (booksToBorrow > 0)
                 {
-                    var issuedDate = ExternalSystemHelper.GetIssuedDate();
-
-                    var dueDate = ExternalSystemHelper.GetDueDate(issuedDate);
-
-                    DateTime? dateReturned = null;
+                    var (issuedDate, dueDate, dateReturned, updateBorrowedCopy, updateToBorrowCopy, isBorrowed) = BorrowBook.Borrow(borrowedCopy, booksToBorrow);
 
                     var dto = borrowed.ToDomain();
-                    var bookdto = book;
 
                     dto.IssuedDate = issuedDate;
                     dto.DueDate = dueDate;
                     dto.DateReturned = dateReturned;
-                    dto.BorrowedStatus = true;
+                    dto.BorrowedStatus = isBorrowed;
 
-                    bookdto.BorrowedCopy = borrowedCopy + 1;
-                    bookdto.ToBorrow = bookToBorrow - 1;
+                    book.BorrowedCopy = updateBorrowedCopy;
+                    book.ToBorrow = updateToBorrowCopy;
 
                     await _borrowedRepository.AddAsync(dto);
-                    await _bookRepository.UpdateAsync(bookdto);
+                    await _bookRepository.UpdateAsync(book);
                 }
                 else
                 {
