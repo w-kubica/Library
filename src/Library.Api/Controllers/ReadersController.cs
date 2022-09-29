@@ -29,14 +29,14 @@ namespace Library.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(ReaderDto newReader)
+        public async Task<ActionResult> Create([FromQuery]ReaderDto newReader)
         {
             await _readerService.AddReaderAsync(newReader);
             return NoContent();
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(UpdateReaderDto updateReader)
+        public async Task<ActionResult> Update([FromQuery]UpdateReaderDto updateReader)
         {
             await _readerService.UpdateReaderAsync(updateReader);
             return NoContent();
