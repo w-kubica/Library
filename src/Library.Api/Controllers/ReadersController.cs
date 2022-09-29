@@ -1,5 +1,5 @@
 ﻿using Library.Application.DTO;
-using Library.Application.Repositories;
+using Library.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Api.Controllers

@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Library.Application.DTO
+﻿namespace Library.Application.DTO
 {
     public class CreateBorrowedDto
     {

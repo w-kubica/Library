@@ -1,12 +1,10 @@
 ﻿using Library.Application.DTO;
 using Library.Application.Mappers;
-using Library.Application.Repositories;
+using Library.Application.Services.Interfaces;
 using Library.Domain.Repositories;
-using Library.Infrastructure.Repositories;
 
 namespace Library.Application.Services
 {
-
     public class ReaderService : IReaderService
     {
         private readonly IReaderRepository _readerRepository;
@@ -40,7 +38,7 @@ namespace Library.Application.Services
             if (pesel.Length != 11)
             {
                 throw new Exception("Invalid pesel.");
-            };
+            }
 
             var t = IsDigit(peselArr);
             if (!t)
@@ -59,9 +57,7 @@ namespace Library.Application.Services
             {
                 throw new Exception("Reader cannot have an empty reader type.");
             }
-
             await _readerRepository.AddAsync(newReader);
-
         }
 
         private static bool IsDigit(char[] peselArr)

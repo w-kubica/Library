@@ -1,6 +1,6 @@
 ﻿using Library.Application.DTO;
 
-namespace Library.Application.Repositories
+namespace Library.Application.Services.Interfaces
 {
     public interface IBorrowedService
     {

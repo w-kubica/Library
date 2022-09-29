@@ -1,6 +1,8 @@
-﻿namespace Library.Infrastructure.Repositories
+﻿using Library.Application.Services.Interfaces;
+
+namespace Library.Application.Services
 {
-    public class ExternalSystemService
+    public class ExternalSystemService : IExternalSystemService
     {
         public static DateTime GettingDateReturned(DateTime issuedDate)
         {
@@ -41,4 +43,6 @@
             return date.Date;
         }
     }
+
+    
 }

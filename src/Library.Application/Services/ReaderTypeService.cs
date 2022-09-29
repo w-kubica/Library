@@ -1,9 +1,9 @@
-﻿using Library.Application.DTO;
+﻿using Library.Application.Services.Interfaces;
 using Library.Domain.Models;
 
-namespace Library.Infrastructure.Repositories;
+namespace Library.Application.Services;
 
-public class ReaderTypeService
+public class ReaderTypeService : IReaderTypeService
 {
     public static Dictionary<int, List<ReaderType>> AssignDic()
     {

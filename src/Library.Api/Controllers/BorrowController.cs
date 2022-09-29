@@ -1,5 +1,5 @@
 ﻿using Library.Application.DTO;
-using Library.Application.Repositories;
+using Library.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Api.Controllers
@@ -29,14 +29,14 @@ namespace Library.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(CreateBorrowedDto newBorrowed)
+        public async Task<ActionResult> Create([FromQuery]CreateBorrowedDto newBorrowed)
         {
             await _borrowedService.AddBorrowedAsync(newBorrowed);
             return NoContent();
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(UpdateBorrowedDto updateBorrowed)
+        public async Task<ActionResult> Update([FromQuery]UpdateBorrowedDto updateBorrowed)
         {
             await _borrowedService.UpdateBorrowedAsync(updateBorrowed);
             return NoContent();

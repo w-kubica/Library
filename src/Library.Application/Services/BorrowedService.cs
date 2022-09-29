@@ -1,8 +1,7 @@
 ﻿using Library.Application.DTO;
 using Library.Application.Mappers;
-using Library.Application.Repositories;
+using Library.Application.Services.Interfaces;
 using Library.Domain.Repositories;
-using Library.Infrastructure.Repositories;
 
 namespace Library.Application.Services
 {
@@ -10,13 +9,11 @@ namespace Library.Application.Services
     {
         private readonly IBorrowedRepository _borrowedRepository;
         private readonly IBookRepository _bookRepository;
-        private readonly IBookService _bookService;
         private readonly IReaderRepository _readerRepository;
 
-        public BorrowedService(IBorrowedRepository borrowedRepository, IBookService bookService, IBookRepository bookRepository, IReaderRepository readerRepository)
+        public BorrowedService(IBorrowedRepository borrowedRepository, IBookRepository bookRepository, IReaderRepository readerRepository)
         {
             _borrowedRepository = borrowedRepository;
-            _bookService = bookService;
             _bookRepository = bookRepository;
             _readerRepository = readerRepository;
         }
@@ -48,7 +45,7 @@ namespace Library.Application.Services
 
                 var dueDate = ExternalSystemService.GettingDueDate(issuedDate);
 
-                DateTime? dateReturned = (DateTime?)null;
+                DateTime? dateReturned = null;
 
                 var dto = borrowed.ToDomain();
                 var bookdto = book;

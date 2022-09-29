@@ -1,6 +1,4 @@
-﻿using Library.Application.Mappers;
-using Library.Application.Repositories;
-using Library.Domain.Models;
+﻿using Library.Domain.Models;
 using Library.Domain.Repositories;
 using Library.Infrastructure.Data;
 using Library.Infrastructure.Mappers;
@@ -11,16 +9,11 @@ namespace Library.Infrastructure.Repositories
     public class BorrowedRepository : IBorrowedRepository
     {
         private readonly LibraryContext _context;
-        private readonly IReaderRepository _readerRepository;
-        private readonly IBookRepository _bookRepository;
-        private readonly IReaderService _readerService;
 
-        public BorrowedRepository(LibraryContext context, IReaderRepository readerRepository, IBookRepository bookRepository, IReaderService readerService)
+        public BorrowedRepository(LibraryContext context)
         {
             _context = context;
-            _readerRepository = readerRepository;
-            _bookRepository = bookRepository;
-            _readerService = readerService;
+
         }
         public async Task<IEnumerable<Borrowed>> GetAllAsync()
         {
@@ -44,7 +37,7 @@ namespace Library.Infrastructure.Repositories
         public async Task UpdateAsync(Borrowed borrowed)
         {
             var dto = borrowed.ToInfrastructure();
-             _context.Update(dto);
+            _context.Update(dto);
             await _context.SaveChangesAsync();
         }
 

@@ -13,7 +13,7 @@ namespace Library.Infrastructure.Data.Configurations
             builder.HasMany(b => b.Borrowed)
                 .WithOne(a => a.Book);
 
-            builder.Property(x => x.Title).IsRequired();
+          //  builder.Property(x => x.Title).IsRequired();
 
         }
     }

@@ -12,7 +12,7 @@ namespace Library.Infrastructure.Data.Configurations
             builder.HasKey(x => x.Id);
             builder.HasMany(b => b.Borrowed)
                 .WithOne(r => r.Reader);
-
+            builder.Property(x => x.ReaderType).IsRequired();
 
         }
     }

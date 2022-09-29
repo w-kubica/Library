@@ -1,17 +1,11 @@
-﻿using Library.Domain.Models;
-using Library.Domain.Repositories;
+﻿using Library.Application.Services.Interfaces;
+using Library.Domain.Models;
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 namespace Library.Application.Services
 {
-    public class OverdueFineService
+    public class OverdueFineService : IOverdueFineService
     {
-        private readonly IReaderRepository _readerRepository;
-
-        public OverdueFineService(IReaderRepository readerRepository)
-        {
-            _readerRepository = readerRepository;
-        }
-
         public static int CalculateDaysOfDelay(DateTime dateReturned, DateTime dueDate)
         {
             var daysOfDelay = (dateReturned - dueDate).Days;
