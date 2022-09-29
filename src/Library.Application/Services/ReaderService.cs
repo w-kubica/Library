@@ -9,10 +9,12 @@ namespace Library.Application.Services
     public class ReaderService : IReaderService
     {
         private readonly IReaderRepository _readerRepository;
+        private readonly IDataValidatorService _dataValidatorService;
 
-        public ReaderService(IReaderRepository readerRepository)
+        public ReaderService(IReaderRepository readerRepository, IDataValidatorService dataValidatorService)
         {
             _readerRepository = readerRepository;
+            _dataValidatorService = dataValidatorService;
         }
 
         public async Task<IEnumerable<ReaderDto>> GetAllReadersAsync()
@@ -51,21 +53,32 @@ namespace Library.Application.Services
 
         public async Task UpdateReaderAsync(UpdateReaderDto reader)
         {
-            var existingReader = await _readerRepository.GetByIdAsync(reader.Id);
-            var existingReaderType = (int)existingReader.ReaderType;
+            var dto = reader.ToDomain();
+            var readerIsExists = await _dataValidatorService.ReaderIsExists(dto.Id);
 
-            var newReaderType = reader.ReaderType;
-
-            var readerTypes = ReaderTypeHelper.AssignDic();
-
-            var isAssign = ReaderTypeHelper.Assign(readerTypes, existingReaderType, newReaderType, existingReader);
-            if (isAssign)
+            if (readerIsExists)
             {
-                await _readerRepository.UpdateAsync(existingReader);
+                var existingReader = await _readerRepository.GetByIdAsync(reader.Id);
+
+                var existingReaderType = (int)existingReader.ReaderType;
+
+                var newReaderType = reader.ReaderType;
+
+                var readerTypes = ReaderTypeHelper.AssignDic();
+
+                var isAssign = ReaderTypeHelper.Assign(readerTypes, existingReaderType, newReaderType, existingReader);
+                if (isAssign)
+                {
+                    await _readerRepository.UpdateAsync(existingReader);
+                }
+                else
+                {
+                    throw new Exception("A role cannot be changed. Incorrect data.");
+                }
             }
             else
             {
-                throw new Exception("A role cannot be changed. Incorrect data.");
+                throw new Exception("Reader does not exist.");
             }
         }
 

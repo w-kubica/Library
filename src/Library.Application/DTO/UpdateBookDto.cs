@@ -1,5 +1,4 @@
-﻿#pragma warning disable CS8618
-namespace Library.Application.DTO
+﻿namespace Library.Application.DTO
 {
     public class UpdateBookDto
     {

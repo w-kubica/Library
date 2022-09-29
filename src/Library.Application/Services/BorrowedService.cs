@@ -11,14 +11,14 @@ namespace Library.Application.Services
         private readonly IBorrowedRepository _borrowedRepository;
         private readonly IBookRepository _bookRepository;
         private readonly IReaderRepository _readerRepository;
-        private readonly IBorrowedValidator _borrowedValidator;
+        private readonly IDataValidatorService _dataValidatorService;
 
-        public BorrowedService(IBorrowedRepository borrowedRepository, IBookRepository bookRepository, IReaderRepository readerRepository, IBorrowedValidator borrowedValidator)
+        public BorrowedService(IBorrowedRepository borrowedRepository, IBookRepository bookRepository, IReaderRepository readerRepository, IDataValidatorService dataValidatorService)
         {
             _borrowedRepository = borrowedRepository;
             _bookRepository = bookRepository;
             _readerRepository = readerRepository;
-            _borrowedValidator = borrowedValidator;
+            _dataValidatorService = dataValidatorService;
         }
 
         public async Task<IEnumerable<BorrowedDto>> GetBorrowedAsync()
@@ -35,9 +35,9 @@ namespace Library.Application.Services
 
         public async Task AddBorrowedAsync(CreateBorrowedDto borrowed)
         {
-            var readerIsExists = await _borrowedValidator.ReaderIsExists(borrowed.ToDomain());
-
-            var bookIsExists = await _borrowedValidator.BookIsExists(borrowed.ToDomain());
+            var dto = borrowed.ToDomain();
+            var readerIsExists = await _dataValidatorService.ReaderIsExists(dto.ReaderId);
+            var bookIsExists = await _dataValidatorService.BookIsExists(dto.BookId);
 
             if (bookIsExists && readerIsExists)
             {
@@ -47,8 +47,6 @@ namespace Library.Application.Services
                 if (booksToBorrow > 0)
                 {
                     var (issuedDate, dueDate, dateReturned, updateBorrowedCopy, updateToBorrowCopy, isBorrowed) = BorrowBook.Borrow(borrowedCopy, booksToBorrow);
-
-                    var dto = borrowed.ToDomain();
 
                     dto.IssuedDate = issuedDate;
                     dto.DueDate = dueDate;
@@ -74,7 +72,8 @@ namespace Library.Application.Services
 
         public async Task UpdateBorrowedAsync(UpdateBorrowedDto updateBorrowed)
         {
-            var borrowedIsExists = await _borrowedValidator.BorrowedIsExists(updateBorrowed.ToDomain());
+            var dto = updateBorrowed.ToDomain();
+            var borrowedIsExists = await _dataValidatorService.BorrowedIsExists(dto.Id);
 
             if (borrowedIsExists)
             {

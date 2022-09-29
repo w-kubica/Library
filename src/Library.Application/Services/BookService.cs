@@ -9,10 +9,12 @@ namespace Library.Application.Services
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IDataValidatorService _dataValidatorService;
 
-        public BookService(IBookRepository bookRepository)
+        public BookService(IBookRepository bookRepository, IDataValidatorService dataValidatorService)
         {
             _bookRepository = bookRepository;
+            _dataValidatorService = dataValidatorService;
         }
         public async Task<IEnumerable<BookDto>> GetBooksAsync()
         {
@@ -44,15 +46,24 @@ namespace Library.Application.Services
         public async Task UpdateBookAsync(UpdateBookDto book)
         {
             var dto = book.ToDomain();
-            if (dto.TotalCopy > 0)
+            var isBookExists = await _dataValidatorService.BookIsExists(dto.Id);
+
+            if (isBookExists)
             {
-                var existingbook = await _bookRepository.GetByIdAsync(book.Id);
-                dto.ToBorrow = dto.TotalCopy - existingbook.BorrowedCopy;
-                await _bookRepository.UpdateAsync(dto);
+                if (dto.TotalCopy > 0)
+                {
+                    var existingbook = await _bookRepository.GetByIdAsync(book.Id);
+                    dto.ToBorrow = dto.TotalCopy - existingbook.BorrowedCopy;
+                    await _bookRepository.UpdateAsync(dto);
+                }
+                else
+                {
+                    throw new Exception("Please enter a valid value.");
+                }
             }
             else
             {
-                throw new Exception("Please enter a valid value.");
+                throw new Exception("Book does not exist.");
             }
         }
 
