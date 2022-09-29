@@ -26,16 +26,36 @@ namespace Library.Application.Services
             return book.ToApplication();
         }
 
-        public async Task AddBookAsync(BookDto book)
+        public async Task AddBookAsync(CreateBookDto book)
         {
             var newbook = book.ToDomain();
-            await _bookRepository.AddAsync(newbook);
+            if (book.TotalCopy > 0)
+            {
+                newbook.BorrowedCopy = 0;
+                newbook.ToBorrow = newbook.TotalCopy - newbook.BorrowedCopy;
+                await _bookRepository.AddAsync(newbook);
+            }
+            else
+            {
+                throw new Exception("Please enter a valid value.");
+            }
+            
         }
 
         public async Task UpdateBookAsync(UpdateBookDto book)
         {
-            var updatebook = book.ToDomain();
-            await _bookRepository.UpdateAsync(updatebook);
+            var dto = book.ToDomain();
+            if (dto.TotalCopy > 0)
+            {
+                var existingbook = await _bookRepository.GetByIdAsync(book.Id);
+                dto.ToBorrow = dto.TotalCopy - existingbook.BorrowedCopy;
+                await _bookRepository.UpdateAsync(dto);
+            }
+            else
+            {
+                throw new Exception("Please enter a valid value.");
+            }
+
         }
 
         public async Task DeleteBookAsync(int id)

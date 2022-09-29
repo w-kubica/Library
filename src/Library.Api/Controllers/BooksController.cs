@@ -29,14 +29,14 @@ namespace Library.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(BookDto newBook)
+        public async Task<ActionResult> Create([FromQuery] CreateBookDto newBook)
         {
             await _bookService.AddBookAsync(newBook);
             return NoContent();
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(UpdateBookDto updateBook)
+        public async Task<ActionResult> Update([FromQuery]UpdateBookDto updateBook)
         {
             await _bookService.UpdateBookAsync(updateBook);
             return NoContent();

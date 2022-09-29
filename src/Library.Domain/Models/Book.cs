@@ -23,6 +23,9 @@
         {
             (Id, Title, TotalCopy) = (id, title, totalCopy);
         }
-
+        public Book(string title, int totalCopy)
+        {
+            (Title, TotalCopy) = (title, totalCopy);
+        }
     }
 }
