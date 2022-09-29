@@ -6,7 +6,7 @@ namespace Library.Domain.Repositories
     {
         Task<IEnumerable<Borrowed>> GetAllAsync();
         Task<Borrowed> GetByIdAsync(int id);
-        Task<Borrowed> AddAsync(Borrowed borrowed);
+        Task AddAsync(Borrowed borrowed);
         Task UpdateAsync(Borrowed borrowed);
         Task DeleteAsync(Borrowed borrowed);
     }

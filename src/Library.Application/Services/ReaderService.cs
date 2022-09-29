@@ -5,6 +5,7 @@ using Library.Domain.Repositories;
 
 namespace Library.Application.Services
 {
+
     public class ReaderService : IReaderService
     {
         private readonly IReaderRepository _readerRepository;
