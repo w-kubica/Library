@@ -1,6 +1,7 @@
 ﻿using Library.Application.DTO;
 using Library.Application.Mappers;
 using Library.Application.Services.Interfaces;
+using Library.Application.Utils;
 using Library.Domain.Repositories;
 
 namespace Library.Application.Services
@@ -10,6 +11,7 @@ namespace Library.Application.Services
         private readonly IBorrowedRepository _borrowedRepository;
         private readonly IBookRepository _bookRepository;
         private readonly IReaderRepository _readerRepository;
+
 
         public BorrowedService(IBorrowedRepository borrowedRepository, IBookRepository bookRepository, IReaderRepository readerRepository)
         {
@@ -41,9 +43,9 @@ namespace Library.Application.Services
             var borrowedCopy = book.BorrowedCopy;
             if (bookToBorrow > 0)
             {
-                var issuedDate = ExternalSystemService.GettingIssuedDate();
+                var issuedDate = ExternalSystemHelper.GetIssuedDate();
 
-                var dueDate = ExternalSystemService.GettingDueDate(issuedDate);
+                var dueDate = ExternalSystemHelper.GetDueDate(issuedDate);
 
                 DateTime? dateReturned = null;
 
@@ -87,13 +89,13 @@ namespace Library.Application.Services
             var issuedDate = borrowed.IssuedDate;
             var dueDate = borrowed.DueDate;
 
-            var dateReturned = ExternalSystemService.GettingDateReturned(issuedDate);
+            var dateReturned = ExternalSystemHelper.GetDateReturned(issuedDate);
 
-            var daysOfDelay = OverdueFineService.CalculateDaysOfDelay(dateReturned, dueDate);
+            var daysOfDelay = OverdueFineHelper.CalculateDaysOfDelay(dateReturned, dueDate);
 
-            var overdueFine = OverdueFineService.Calculate(readerType, daysOfDelay);
+            var overdueFine = OverdueFineHelper.Calculate(readerType, daysOfDelay);
 
-            bool isCharged = ExternalSystemService.GettingIsCharged(overdueFine);
+            bool isCharged = ExternalSystemHelper.GetIsCharged(overdueFine);
 
             borrowed.DateReturned = dateReturned;
             borrowed.DaysOfDelay = daysOfDelay;

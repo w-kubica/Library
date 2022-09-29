@@ -6,7 +6,7 @@ namespace Library.Application.Services.Interfaces
     {
         Task<IEnumerable<ReaderDto>> GetAllReadersAsync();
         Task<ReaderDto> GetReaderByIdAsync(int id);
-        Task AddReaderAsync(ReaderDto reader);
+        Task AddReaderAsync(CreateReaderDto reader);
         Task UpdateReaderAsync(UpdateReaderDto reader);
         Task DeleteReaderAsync(int id);
 

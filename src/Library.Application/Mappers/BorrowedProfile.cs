@@ -12,7 +12,7 @@ namespace Library.Application.Mappers
             new(borrowed.Id, borrowed.ReaderId, borrowed.BookId, borrowed.IssuedDate, borrowed.DueDate, borrowed.DateReturned, borrowed.BorrowedStatus, borrowed.DaysOfDelay, borrowed.OverdueFine, borrowed.IsCharged);
 
         public static Borrowed ToDomain(this CreateBorrowedDto borrowed) =>
-            new(borrowed.Id, borrowed.ReaderId, borrowed.BookId);
+            new(borrowed.ReaderId, borrowed.BookId);
         public static Borrowed ToDomain(this UpdateBorrowedDto borrowed) =>
             new(borrowed.Id);
     }

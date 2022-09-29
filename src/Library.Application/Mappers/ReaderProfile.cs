@@ -10,7 +10,8 @@ namespace Library.Application.Mappers
 
         public static Reader ToDomain(this ReaderDto reader) =>
             new(reader.Id, reader.Pesel, reader.ReaderType);
-
+        public static Reader ToDomain(this CreateReaderDto reader) =>
+            new(reader.Pesel, reader.ReaderType);
         public static Reader ToDomain(this UpdateReaderDto reader) =>
             new(reader.Id, reader.ReaderType);
 

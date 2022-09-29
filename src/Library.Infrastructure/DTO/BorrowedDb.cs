@@ -26,6 +26,11 @@
             (Id) = (id);
         }
 
+        public BorrowedDb(int readerId, int bookId)
+        {
+            (ReaderId, BookId) = (readerId, bookId);
+        }
+
         public BorrowedDb()
         {
 

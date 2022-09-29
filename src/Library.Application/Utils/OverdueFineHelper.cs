@@ -1,10 +1,9 @@
 ﻿using Library.Application.Services.Interfaces;
 using Library.Domain.Models;
-// ReSharper disable ConditionIsAlwaysTrueOrFalse
 
-namespace Library.Application.Services
+namespace Library.Application.Utils
 {
-    public class OverdueFineService : IOverdueFineService
+    public static class OverdueFineHelper
     {
         public static int CalculateDaysOfDelay(DateTime dateReturned, DateTime dueDate)
         {
@@ -21,15 +20,15 @@ namespace Library.Application.Services
             decimal overdueFine;
             if (readerType == ReaderType.Lecturer)
             {
-                overdueFine = OverdueFineService.ForLecturers(daysOfDelay);
+                overdueFine = ForLecturers(daysOfDelay);
             }
             else if (readerType == ReaderType.Student)
             {
-                overdueFine = OverdueFineService.ForStudents(daysOfDelay);
+                overdueFine = ForStudents(daysOfDelay);
             }
             else if (readerType == ReaderType.Employee)
             {
-                overdueFine = OverdueFineService.ForEmployees(daysOfDelay);
+                overdueFine = ForEmployees(daysOfDelay);
             }
             else
             {
@@ -38,7 +37,7 @@ namespace Library.Application.Services
 
             return overdueFine;
         }
-        public static decimal ForEmployees(int daysOfDelay)
+        private static decimal ForEmployees(int daysOfDelay)
         {
             decimal overdueFine;
             if (daysOfDelay <= 28)
@@ -53,7 +52,7 @@ namespace Library.Application.Services
             return overdueFine;
         }
 
-        public static decimal ForStudents(int daysOfDelay)
+        private static decimal ForStudents(int daysOfDelay)
         {
             decimal overdueFine;
             if (daysOfDelay <= 7)
@@ -77,7 +76,7 @@ namespace Library.Application.Services
             return overdueFine;
         }
 
-        public static decimal ForLecturers(int daysOfDelay)
+        private static decimal ForLecturers(int daysOfDelay)
         {
             decimal overdueFine;
             if (daysOfDelay <= 3)

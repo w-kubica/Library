@@ -36,7 +36,7 @@ namespace Library.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update([FromQuery]UpdateBorrowedDto updateBorrowed)
+        public async Task<ActionResult> Update([FromQuery] UpdateBorrowedDto updateBorrowed)
         {
             await _borrowedService.UpdateBorrowedAsync(updateBorrowed);
             return NoContent();

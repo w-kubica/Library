@@ -12,9 +12,6 @@ namespace Library.Infrastructure.Data.Configurations
             builder.HasKey(x => x.Id);
             builder.HasMany(b => b.Borrowed)
                 .WithOne(a => a.Book);
-
-          //  builder.Property(x => x.Title).IsRequired();
-
         }
     }
 }

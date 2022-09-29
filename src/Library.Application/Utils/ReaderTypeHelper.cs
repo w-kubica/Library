@@ -1,9 +1,8 @@
-﻿using Library.Application.Services.Interfaces;
-using Library.Domain.Models;
+﻿using Library.Domain.Models;
 
-namespace Library.Application.Services;
+namespace Library.Application.Utils;
 
-public class ReaderTypeService : IReaderTypeService
+public class ReaderTypeHelper
 {
     public static Dictionary<int, List<ReaderType>> AssignDic()
     {
@@ -26,8 +25,9 @@ public class ReaderTypeService : IReaderTypeService
         rolesDic.Add((int)ReaderType.Employee, employeeRole);
         return rolesDic;
     }
-    public static void Assign(Dictionary<int, List<ReaderType>> rolesDic, int existingRole, ReaderType newRole, Reader reader)
+    public static bool Assign(Dictionary<int, List<ReaderType>> rolesDic, int existingRole, ReaderType newRole, Reader reader)
     {
+        bool isAssign;
         if (rolesDic.ContainsKey(existingRole))
         {
             var possibleReaderTypes = rolesDic[existingRole];
@@ -35,15 +35,20 @@ public class ReaderTypeService : IReaderTypeService
             if (possibleReaderTypes.Contains(newRole))
             {
                 reader.ReaderType = newRole;
+                isAssign = true;
             }
             else
             {
-                throw new Exception("A role cannot be changed. Incorrect data.");
+                //todo:poprawić zwracać z tej metody bool 
+                //throw new Exception("A role cannot be changed. Incorrect data.");
+                isAssign = false;
             }
         }
         else
         {
-            throw new Exception("Wrong data on the database.");
+            //throw new Exception("Wrong data on the database.");
+            isAssign = false;
         }
+        return isAssign;
     }
 }

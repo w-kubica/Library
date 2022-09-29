@@ -1,6 +1,7 @@
 ﻿using Library.Application.DTO;
 using Library.Application.Mappers;
 using Library.Application.Services.Interfaces;
+using Library.Application.Utils;
 using Library.Domain.Repositories;
 
 namespace Library.Application.Services
@@ -25,23 +26,14 @@ namespace Library.Application.Services
             return reader.ToApplication();
         }
 
-        public async Task AddReaderAsync(ReaderDto reader)
+        public async Task AddReaderAsync(CreateReaderDto reader)
         {
             var newReader = reader.ToDomain();
             var pesel = newReader.Pesel;
-            if (string.IsNullOrEmpty(newReader.Pesel))
-            {
-                throw new Exception("Reader cannot have an empty pesel.");
-            }
 
-            var peselArr = pesel.ToArray();
-            if (pesel.Length != 11)
-            {
-                throw new Exception("Invalid pesel.");
-            }
+            var isValid = PeselValidatorHelper.IsValidPESEL(pesel);
 
-            var t = IsDigit(peselArr);
-            if (!t)
+            if (!isValid)
             {
                 throw new Exception("Invalid pesel.");
             }
@@ -60,19 +52,7 @@ namespace Library.Application.Services
             await _readerRepository.AddAsync(newReader);
         }
 
-        private static bool IsDigit(char[] peselArr)
-        {
-            bool t = true;
-            foreach (char ch in peselArr)
-            {
-                if (!char.IsDigit(ch))
-                {
-                    t = false;
-                    break;
-                }
-            }
-            return t;
-        }
+
 
         public async Task UpdateReaderAsync(UpdateReaderDto reader)
         {
@@ -81,11 +61,17 @@ namespace Library.Application.Services
 
             var newReaderType = reader.ReaderType;
 
-            var readerTypes = ReaderTypeService.AssignDic();
+            var readerTypes = ReaderTypeHelper.AssignDic();
 
-            ReaderTypeService.Assign(readerTypes, existingReaderType, newReaderType, existingReader);
-
-            await _readerRepository.UpdateAsync(existingReader);
+            var isAssign = ReaderTypeHelper.Assign(readerTypes, existingReaderType, newReaderType, existingReader);
+            if (isAssign)
+            {
+                await _readerRepository.UpdateAsync(existingReader);
+            }
+            else
+            {
+                throw new Exception("A role cannot be changed. Incorrect data.");
+            }
         }
 
         public async Task DeleteReaderAsync(int id)

@@ -10,12 +10,12 @@ namespace Library.Application.DTO
 
         public ReaderDto(int id, string pesel, ReaderType readerType)
         {
-            (Id,Pesel,ReaderType)=(id,pesel,readerType);
+            (Id, Pesel, ReaderType) = (id, pesel, readerType);
         }
 
         public ReaderDto()
         {
-            
+
         }
     }
 

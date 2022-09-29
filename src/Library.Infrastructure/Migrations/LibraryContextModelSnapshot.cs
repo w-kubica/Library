@@ -77,7 +77,7 @@ namespace Library.Infrastructure.Migrations
                     b.Property<DateTime>("IssuedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("OverdueFineService")
+                    b.Property<decimal>("OverdueFineHelper")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ReaderId")
