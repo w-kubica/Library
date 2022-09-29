@@ -1,4 +1,4 @@
-﻿using Library.Application.DTO;
+using Library.Application.DTO;
 using Library.Application.Mappers;
 using Library.Application.Services.Interfaces;
 using Library.Domain.Repositories;
@@ -46,7 +46,7 @@ namespace Library.Application.Services
         public async Task UpdateBookAsync(UpdateBookDto book)
         {
             var dto = book.ToDomain();
-            var isBookExists = await _dataValidatorService.BookIsExists(dto.Id);
+            var isBookExists = await _dataValidatorService.IsBookExists(dto.Id);
 
             if (isBookExists)
             {

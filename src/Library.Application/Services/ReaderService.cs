@@ -1,4 +1,4 @@
-﻿using Library.Application.DTO;
+using Library.Application.DTO;
 using Library.Application.Mappers;
 using Library.Application.Services.Interfaces;
 using Library.Application.Utils;
@@ -34,7 +34,7 @@ namespace Library.Application.Services
             var newReader = reader.ToDomain();
             var pesel = newReader.Pesel;
 
-            var isValid = PeselValidatorHelper.IsValidPesel(pesel);
+            var isValid = pesel.IsValidPesel();
 
             if (!isValid)
             {
@@ -54,19 +54,16 @@ namespace Library.Application.Services
         public async Task UpdateReaderAsync(UpdateReaderDto reader)
         {
             var dto = reader.ToDomain();
-            var readerIsExists = await _dataValidatorService.ReaderIsExists(dto.Id);
+            var isReaderExists = await _dataValidatorService.IsReaderExists(dto.Id);
 
-            if (readerIsExists)
+            if (isReaderExists)
             {
                 var existingReader = await _readerRepository.GetByIdAsync(reader.Id);
 
-                var existingReaderType = (int)existingReader.ReaderType;
-
+                var existingReaderType = existingReader.ReaderType;
                 var newReaderType = reader.ReaderType;
 
-                var readerTypes = ReaderTypeHelper.AssignDic();
-
-                var isAssign = ReaderTypeHelper.Assign(readerTypes, existingReaderType, newReaderType, existingReader);
+                var isAssign = ReaderTypeHelper.Assign(ReaderTypeHelper.PossibleReaderTypes(), existingReaderType, newReaderType, existingReader);
                 if (isAssign)
                 {
                     await _readerRepository.UpdateAsync(existingReader);

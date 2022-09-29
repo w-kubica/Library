@@ -1,5 +1,10 @@
 ﻿namespace Library.Application.Utils
 {
+    /// <summary>
+    /// Klasa ta jest symulacją zachowania systemu zewnętrznego. Służy do generowania danych, które pochodzą od systemu zewnętrznego opisanego w treści zadania . 
+    /// Ta klasa nie jest częścią mojego modułu - biblioteka. Jest tylko symulacja.
+    /// Do operacji systemu zewnętrznego należy określenie daty wypożyczenia książki, daty zwrotu książki, terminu zwrotu książki oraz podjęciu decyzji o naliczeniu kary.
+    /// </summary>
     public static class ExternalSystemHelper
     {
         public static DateTime GetDateReturned(DateTime issuedDate)

@@ -23,7 +23,7 @@ namespace Library.Infrastructure.Repositories
 
         public async Task<Book> GetByIdAsync(int id)
         {
-            var book = await _context.Books.SingleOrDefaultAsync(x => x.Id == id);
+            var book = await _context.Books.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
             if (book != null) return book.ToDomain();
             else throw new Exception("Error");
         }

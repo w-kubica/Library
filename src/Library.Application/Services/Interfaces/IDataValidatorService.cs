@@ -2,7 +2,7 @@
 
 public interface IDataValidatorService
 {
-    Task<bool> ReaderIsExists(int readerId);
-    Task<bool> BookIsExists(int bookId);
-    Task<bool> BorrowedIsExists(int borrowedId);
+    Task<bool> IsReaderExists(int readerId);
+    Task<bool> IsBookExists(int bookId);
+    Task<bool> IsBorrowedExists(int borrowedId);
 }

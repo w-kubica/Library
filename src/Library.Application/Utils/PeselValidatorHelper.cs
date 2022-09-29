@@ -4,22 +4,24 @@
     {
         public static bool IsValidPesel(this string input)
         {
-            bool result = false;
+            var result = false;
             if (IsDigit(input))
             {
+                if (input.Length != 11) return result;
+
                 int[] weights = { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
-                if (input.Length == 11)
+
+                var controlSum = CalculateControlSum(input, weights);
+                var controlNum = controlSum % 10;
+                controlNum = 10 - controlNum;
+
+                if (controlNum == 10)
                 {
-                    int controlSum = CalculateControlSum(input, weights);
-                    int controlNum = controlSum % 10;
-                    controlNum = 10 - controlNum;
-                    if (controlNum == 10)
-                    {
-                        controlNum = 0;
-                    }
-                    int lastDigit = int.Parse(input[input.Length - 1].ToString());
-                    result = controlNum == lastDigit;
+                    controlNum = 0;
                 }
+
+                var lastDigit = int.Parse(input[input.Length - 1].ToString());
+                result = controlNum == lastDigit;
             }
             else
             {
@@ -30,8 +32,8 @@
 
         private static bool IsDigit(this string input)
         {
-            bool result = true;
-            foreach (char ch in input)
+            var result = true;
+            foreach (var ch in input)
             {
                 if (!char.IsDigit(ch))
                 {
@@ -44,8 +46,8 @@
 
         private static int CalculateControlSum(string input, int[] weights, int offset = 0)
         {
-            int controlSum = 0;
-            for (int i = 0; i < input.Length - 1; i++)
+            var controlSum = 0;
+            for (var i = 0; i < input.Length - 1; i++)
             {
                 controlSum += weights[i + offset] * int.Parse(input[i].ToString());
             }

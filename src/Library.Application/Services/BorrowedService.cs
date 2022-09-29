@@ -1,4 +1,4 @@
-﻿using Library.Application.DTO;
+using Library.Application.DTO;
 using Library.Application.Mappers;
 using Library.Application.Services.Interfaces;
 using Library.Application.Utils;
@@ -36,25 +36,17 @@ namespace Library.Application.Services
         public async Task AddBorrowedAsync(CreateBorrowedDto borrowed)
         {
             var dto = borrowed.ToDomain();
-            var readerIsExists = await _dataValidatorService.ReaderIsExists(dto.ReaderId);
-            var bookIsExists = await _dataValidatorService.BookIsExists(dto.BookId);
+            var isReaderExists = await _dataValidatorService.IsReaderExists(dto.ReaderId);
+            var isBookExists = await _dataValidatorService.IsBookExists(dto.BookId);
 
-            if (bookIsExists && readerIsExists)
+            if (isBookExists && isReaderExists)
             {
                 var book = await _bookRepository.GetByIdAsync(borrowed.BookId);
                 var booksToBorrow = book.ToBorrow;
                 var borrowedCopy = book.BorrowedCopy;
                 if (booksToBorrow > 0)
                 {
-                    var (issuedDate, dueDate, dateReturned, updateBorrowedCopy, updateToBorrowCopy, isBorrowed) = BorrowBook.Borrow(borrowedCopy, booksToBorrow);
-
-                    dto.IssuedDate = issuedDate;
-                    dto.DueDate = dueDate;
-                    dto.DateReturned = dateReturned;
-                    dto.BorrowedStatus = isBorrowed;
-
-                    book.BorrowedCopy = updateBorrowedCopy;
-                    book.ToBorrow = updateToBorrowCopy;
+                    (dto.IssuedDate, dto.DueDate, dto.DateReturned, book.BorrowedCopy, book.ToBorrow, dto.BorrowedStatus) = BorrowBook.Borrow(borrowedCopy, booksToBorrow);
 
                     await _borrowedRepository.AddAsync(dto);
                     await _bookRepository.UpdateAsync(book);
@@ -73,9 +65,9 @@ namespace Library.Application.Services
         public async Task UpdateBorrowedAsync(UpdateBorrowedDto updateBorrowed)
         {
             var dto = updateBorrowed.ToDomain();
-            var borrowedIsExists = await _dataValidatorService.BorrowedIsExists(dto.Id);
+            var isBorrowedExists = await _dataValidatorService.IsBorrowedExists(dto.Id);
 
-            if (borrowedIsExists)
+            if (isBorrowedExists)
             {
                 var borrowedId = updateBorrowed.Id;
 
@@ -85,7 +77,6 @@ namespace Library.Application.Services
                     var book = await _bookRepository.GetByIdAsync(borrowed.BookId);
 
                     var reader = await _readerRepository.GetByIdAsync(borrowed.ReaderId);
-                    var (dateReturned, daysOfDelay, overdueFine, isCharged, isBorrowed, updateBorrowedCopy, updateToBorrowCopy) = ReturnBook.Return(reader, book, borrowed);
 
                     borrowed.DateReturned = dateReturned;
                     borrowed.DaysOfDelay = daysOfDelay;
@@ -93,8 +84,8 @@ namespace Library.Application.Services
                     borrowed.IsCharged = isCharged;
                     borrowed.BorrowedStatus = isBorrowed;
 
-                    book.BorrowedCopy = updateBorrowedCopy;
-                    book.ToBorrow = updateToBorrowCopy;
+                    (borrowed.DateReturned, borrowed.DaysOfDelay, borrowed.OverdueFine, borrowed.IsCharged, borrowed.BorrowedStatus,
+                        book.BorrowedCopy, book.ToBorrow) = ReturnBook.Return(reader, book, borrowed);
 
                     await _borrowedRepository.UpdateAsync(borrowed);
                     await _bookRepository.UpdateAsync(book);
