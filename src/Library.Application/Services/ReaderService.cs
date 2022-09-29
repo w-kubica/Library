@@ -1,4 +1,4 @@
-using Library.Application.DTO;
+﻿using Library.Application.DTO;
 using Library.Application.Mappers;
 using Library.Application.Services.Interfaces;
 using Library.Application.Utils;
@@ -41,6 +41,7 @@ namespace Library.Application.Services
                 throw new Exception("Invalid pesel.");
             }
 
+            // todo: move to infra
             var readers = await _readerRepository.GetAllAsync();
 
             if (readers.Any(a => a.Pesel == newReader.Pesel))
@@ -70,6 +71,7 @@ namespace Library.Application.Services
                 }
                 else
                 {
+                    //todo: move to helper, remove bool
                     throw new Exception("A role cannot be changed. Incorrect data.");
                 }
             }

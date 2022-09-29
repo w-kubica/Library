@@ -27,10 +27,7 @@ namespace Library.Infrastructure.Repositories
             var borrowed = await _context.Borrowed.SingleOrDefaultAsync(x => x.Id == id);
             if (borrowed != null) 
                 return borrowed.ToDomain();
-            else
-            {
-                throw new Exception("Error");
-            }
+            throw new Exception($"There is no borrowed with id: {id}");
         }
 
         public async Task AddAsync(Borrowed borrowed)

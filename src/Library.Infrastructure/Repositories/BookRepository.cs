@@ -23,9 +23,10 @@ namespace Library.Infrastructure.Repositories
 
         public async Task<Book> GetByIdAsync(int id)
         {
-            var book = await _context.Books.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
-            if (book != null) return book.ToDomain();
-            else throw new Exception("Error");
+            var book = await _context.Books.SingleOrDefaultAsync(x => x.Id == id);
+            if (book != null) 
+                return book.ToDomain();
+            throw new Exception($"There is no book with id: {id}");
         }
 
         public async Task AddAsync(Book book)

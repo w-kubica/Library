@@ -10,8 +10,9 @@ namespace Library.Infrastructure.Mappers
 
         public static Reader ToDomain (this ReaderDb reader)
         {
-            if (reader.Pesel != null) return new(reader.Id, reader.Pesel, reader.ReaderType);
-            else throw new Exception("Error");
+            if (reader.Pesel != null) 
+                return new(reader.Id, reader.Pesel, reader.ReaderType);
+            throw new Exception($"There is no reader with id: {reader.Id}");
         }
     }
 }

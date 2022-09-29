@@ -1,4 +1,4 @@
-using Library.Application.DTO;
+﻿using Library.Application.DTO;
 using Library.Application.Mappers;
 using Library.Application.Services.Interfaces;
 using Library.Application.Utils;
@@ -78,11 +78,7 @@ namespace Library.Application.Services
 
                     var reader = await _readerRepository.GetByIdAsync(borrowed.ReaderId);
 
-                    borrowed.DateReturned = dateReturned;
-                    borrowed.DaysOfDelay = daysOfDelay;
-                    borrowed.OverdueFine = overdueFine;
-                    borrowed.IsCharged = isCharged;
-                    borrowed.BorrowedStatus = isBorrowed;
+                    // todo: change to objects
 
                     (borrowed.DateReturned, borrowed.DaysOfDelay, borrowed.OverdueFine, borrowed.IsCharged, borrowed.BorrowedStatus,
                         book.BorrowedCopy, book.ToBorrow) = ReturnBook.Return(reader, book, borrowed);

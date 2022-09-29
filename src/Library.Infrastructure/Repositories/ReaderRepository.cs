@@ -26,7 +26,6 @@ namespace Library.Infrastructure.Repositories
             var reader = await _context.Readers.SingleOrDefaultAsync(x => x.Id == id);
             if (reader != null)
                 return reader.ToDomain();
-            
             throw new Exception($"There is no reader with id: {id}");
         }
 
