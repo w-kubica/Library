@@ -12,11 +12,6 @@ namespace Library.Application.DTO
         {
             (Id, Pesel, ReaderType) = (id, pesel, readerType);
         }
-
-        public ReaderDto()
-        {
-
-        }
     }
 
 

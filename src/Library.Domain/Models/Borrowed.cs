@@ -25,11 +25,6 @@
             (Id) = (id);
         }
 
-        public Borrowed()
-        {
-
-        }
-
         public Borrowed(int readerId, int bookId)
         {
             (ReaderId, BookId) = (readerId, bookId);

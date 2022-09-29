@@ -27,11 +27,7 @@
         {
             (Id, Title, TotalCopy, BorrowedCopy, ToBorrow) = (id, title, totalCopy, borrowedCopy, SetToBorrow(totalCopy, borrowedCopy, toBorrow));
         }
-
-        public BookDb(int id, string title, int totalCopy)
-        {
-            (Id, Title, TotalCopy) = (id, title, totalCopy);
-        }
+        
 
     }
 }

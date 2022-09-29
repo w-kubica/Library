@@ -21,16 +21,6 @@
                 overdueFine, isCharged);
         }
 
-        public BorrowedDb(int id)
-        {
-            (Id) = (id);
-        }
-
-        public BorrowedDb(int readerId, int bookId)
-        {
-            (ReaderId, BookId) = (readerId, bookId);
-        }
-
         public BorrowedDb()
         {
 

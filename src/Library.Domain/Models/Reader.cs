@@ -6,7 +6,6 @@
         public string Pesel { get; set; }
         public ReaderType ReaderType { get; set; }
 
-
         public Reader(int id, string pesel, ReaderType readerType)
         {
             (Id, Pesel, ReaderType) = (id, pesel, readerType);
@@ -20,12 +19,5 @@
         {
             (Id, ReaderType) = (id, readerType);
         }
-
-        public Reader()
-        {
-
-        }
     }
-
-
 }

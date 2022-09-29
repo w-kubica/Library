@@ -7,10 +7,6 @@
         public int TotalCopy { get; set; }
         public int BorrowedCopy { get; set; }
         public int ToBorrow { get; set; }
-        public BookDto()
-        {
-
-        }
 
         public BookDto(int id, string title, int totalCopy, int borrowedCopy, int toBorrow)
         {

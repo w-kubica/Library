@@ -19,10 +19,5 @@
                 IsCharged) = (id, readerId, bookId, issuedDate, dueDate, dateReturned, borrowedStatus, daysOfDelay,
                 overdueFine, isCharged);
         }
-
-        public BorrowedDto()
-        {
-
-        }
     }
 }
