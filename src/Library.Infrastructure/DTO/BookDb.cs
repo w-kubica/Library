@@ -8,14 +8,13 @@ namespace Library.Infrastructure.DTO
         public int TotalCopy { get; set; }
         public int BorrowedCopy { get; set; }
         public int ToBorrow { get; set; }
-        public List<BorrowedDb> Borrowed { get; set; } = new List<BorrowedDb>();
+        public List<BorrowedDb> Borrowed { get; set; } = new();
 
-        public int SetToBorrow(int totalCopy, int borrowedCopy, int toBorrow)
+        private int SetToBorrow(int totalCopy, int borrowedCopy)
         {
             TotalCopy = totalCopy;
             BorrowedCopy = borrowedCopy;
-            toBorrow = totalCopy - borrowedCopy;
-            ToBorrow = toBorrow;
+            ToBorrow = totalCopy - borrowedCopy;
             return ToBorrow;
         }
 
@@ -24,9 +23,9 @@ namespace Library.Infrastructure.DTO
 
         }
 
-        public BookDb(int id, string title, int totalCopy, int borrowedCopy, int toBorrow)
+        public BookDb(int id, string title, int totalCopy, int borrowedCopy)
         {
-            (Id, Title, TotalCopy, BorrowedCopy, ToBorrow) = (id, title, totalCopy, borrowedCopy, SetToBorrow(totalCopy, borrowedCopy, toBorrow));
+            (Id, Title, TotalCopy, BorrowedCopy, ToBorrow) = (id, title, totalCopy, borrowedCopy, SetToBorrow(totalCopy, borrowedCopy));
         }
         
 

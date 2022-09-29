@@ -32,8 +32,8 @@ namespace Library.Application.Services
 
         public async Task<bool> BorrowedIsExists(int borrowedId)
         {
-            var borrowed_ = await _borrowedRepository.GetAllAsync();
-            var borrowedIsExist = borrowed_.Any(a => a.Id == borrowedId);
+            var borrowed = await _borrowedRepository.GetAllAsync();
+            var borrowedIsExist = borrowed.Any(a => a.Id == borrowedId);
             return borrowedIsExist;
         }
     }
