@@ -17,6 +17,8 @@ builder.Services.AddScoped<IReaderRepository, ReaderRepository>();
 builder.Services.AddScoped<IBorrowedService, BorrowedService>();
 builder.Services.AddScoped<IBorrowedRepository, BorrowedRepository>();
 
+builder.Services.AddScoped<IBorrowedValidator,BorrowedValidator>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

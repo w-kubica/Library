@@ -11,20 +11,20 @@ namespace Library.Application.Services
         private readonly IBorrowedRepository _borrowedRepository;
         private readonly IBookRepository _bookRepository;
         private readonly IReaderRepository _readerRepository;
+        private readonly IBorrowedValidator _borrowedValidator;
 
-
-        public BorrowedService(IBorrowedRepository borrowedRepository, IBookRepository bookRepository, IReaderRepository readerRepository)
+        public BorrowedService(IBorrowedRepository borrowedRepository, IBookRepository bookRepository, IReaderRepository readerRepository, IBorrowedValidator borrowedValidator)
         {
             _borrowedRepository = borrowedRepository;
             _bookRepository = bookRepository;
             _readerRepository = readerRepository;
+            _borrowedValidator = borrowedValidator;
         }
 
         public async Task<IEnumerable<BorrowedDto>> GetBorrowedAsync()
         {
             var borrowed = await _borrowedRepository.GetAllAsync();
             return borrowed.Select(a => a.ToApplication());
-
         }
 
         public async Task<BorrowedDto> GetBorrowedByIdAsync(int id)
@@ -35,79 +35,85 @@ namespace Library.Application.Services
 
         public async Task AddBorrowedAsync(CreateBorrowedDto borrowed)
         {
-            //var newborrowed = borrowed.ToDomain();
-            //await _borrowedRepository.AddAsync(newborrowed);
+            var readerIsExist = await _borrowedValidator.ReaderIsExists(borrowed.ToDomain());
 
-            var book = await _bookRepository.GetByIdAsync(borrowed.BookId);
-            var bookToBorrow = book.ToBorrow;
-            var borrowedCopy = book.BorrowedCopy;
-            if (bookToBorrow > 0)
+            var bookIsExist = await _borrowedValidator.BookIsExists(borrowed.ToDomain());
+
+            if (bookIsExist && readerIsExist)
             {
-                var issuedDate = ExternalSystemHelper.GetIssuedDate();
+                var book = await _bookRepository.GetByIdAsync(borrowed.BookId);
+                var bookToBorrow = book.ToBorrow;
+                var borrowedCopy = book.BorrowedCopy;
+                if (bookToBorrow > 0)
+                {
+                    var issuedDate = ExternalSystemHelper.GetIssuedDate();
 
-                var dueDate = ExternalSystemHelper.GetDueDate(issuedDate);
+                    var dueDate = ExternalSystemHelper.GetDueDate(issuedDate);
 
-                DateTime? dateReturned = null;
+                    DateTime? dateReturned = null;
 
-                var dto = borrowed.ToDomain();
-                var bookdto = book;
+                    var dto = borrowed.ToDomain();
+                    var bookdto = book;
 
-                dto.IssuedDate = issuedDate;
-                dto.DueDate = dueDate;
-                dto.DateReturned = dateReturned;
-                dto.BorrowedStatus = true;
+                    dto.IssuedDate = issuedDate;
+                    dto.DueDate = dueDate;
+                    dto.DateReturned = dateReturned;
+                    dto.BorrowedStatus = true;
 
-                bookdto.BorrowedCopy = borrowedCopy + 1;
-                bookdto.ToBorrow = bookToBorrow - 1;
+                    bookdto.BorrowedCopy = borrowedCopy + 1;
+                    bookdto.ToBorrow = bookToBorrow - 1;
 
-                await _borrowedRepository.AddAsync(dto);
-                await _bookRepository.UpdateAsync(bookdto);
+                    await _borrowedRepository.AddAsync(dto);
+                    await _bookRepository.UpdateAsync(bookdto);
+                }
+                else
+                {
+                    throw new Exception("The book is already on loan.");
+                }
             }
             else
             {
-                throw new Exception("The book is already on loan.");
+                throw new Exception("Invalid book or reader.");
             }
         }
 
         public async Task UpdateBorrowedAsync(UpdateBorrowedDto updateBorrowed)
         {
-            //var updateBorrowed = borrowed.ToDomain();
-            //await _borrowedRepository.UpdateAsync(updateBorrowed);
+            var borrowedIsExists = await _borrowedValidator.BorrowedIsExists(updateBorrowed.ToDomain());
 
-            var borrowedId = updateBorrowed.Id;
+            if (borrowedIsExists)
+            {
+                var borrowedId = updateBorrowed.Id;
 
-            var borrowed = await _borrowedRepository.GetByIdAsync(borrowedId);
+                var borrowed = await _borrowedRepository.GetByIdAsync(borrowedId);
+                if (borrowed.BorrowedStatus)
+                {
+                    var book = await _bookRepository.GetByIdAsync(borrowed.BookId);
 
-            var book = await _bookRepository.GetByIdAsync(borrowed.BookId);
+                    var reader = await _readerRepository.GetByIdAsync(borrowed.ReaderId);
+                    var (dateReturned, daysOfDelay, overdueFine, isCharged, isBorrowed, updateBorrowedCopy, updateToBorrowCopy) = ReturnBook.Return(reader, book, borrowed);
 
-            var reader = await _readerRepository.GetByIdAsync(borrowed.ReaderId);
-            var readerType = reader.ReaderType;
+                    borrowed.DateReturned = dateReturned;
+                    borrowed.DaysOfDelay = daysOfDelay;
+                    borrowed.OverdueFine = overdueFine;
+                    borrowed.IsCharged = isCharged;
+                    borrowed.BorrowedStatus = isBorrowed;
 
-            var bookToBorrow = book.ToBorrow;
-            var borrowedCopy = book.BorrowedCopy;
+                    book.BorrowedCopy = updateBorrowedCopy;
+                    book.ToBorrow = updateToBorrowCopy;
 
-            var issuedDate = borrowed.IssuedDate;
-            var dueDate = borrowed.DueDate;
-
-            var dateReturned = ExternalSystemHelper.GetDateReturned(issuedDate);
-
-            var daysOfDelay = OverdueFineHelper.CalculateDaysOfDelay(dateReturned, dueDate);
-
-            var overdueFine = OverdueFineHelper.Calculate(readerType, daysOfDelay);
-
-            bool isCharged = ExternalSystemHelper.GetIsCharged(overdueFine);
-
-            borrowed.DateReturned = dateReturned;
-            borrowed.DaysOfDelay = daysOfDelay;
-            borrowed.OverdueFine = overdueFine;
-            borrowed.IsCharged = isCharged;
-            borrowed.BorrowedStatus = false;
-
-            book.BorrowedCopy = borrowedCopy - 1;
-            book.ToBorrow = bookToBorrow + 1;
-
-            await _borrowedRepository.UpdateAsync(borrowed);
-            await _bookRepository.UpdateAsync(book);
+                    await _borrowedRepository.UpdateAsync(borrowed);
+                    await _bookRepository.UpdateAsync(book);
+                }
+                else
+                {
+                    throw new Exception("The book has already been returned.");
+                }
+            }
+            else
+            {
+                throw new Exception("Borrow not exist.");
+            }
         }
 
         public async Task DeleteBorrowedAsync(int id)

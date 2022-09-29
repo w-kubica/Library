@@ -54,7 +54,6 @@ namespace Library.Application.Services
             {
                 throw new Exception("Please enter a valid value.");
             }
-
         }
 
         public async Task DeleteBookAsync(int id)

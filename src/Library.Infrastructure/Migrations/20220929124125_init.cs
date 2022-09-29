@@ -5,18 +5,39 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Library.Infrastructure.Migrations
 {
-    public partial class updateef : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "Books",
-                type: "nvarchar(max)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+            migrationBuilder.CreateTable(
+                name: "Books",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalCopy = table.Column<int>(type: "int", nullable: false),
+                    BorrowedCopy = table.Column<int>(type: "int", nullable: false),
+                    ToBorrow = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Books", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Readers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Pesel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReaderType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Readers", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Borrowed",
@@ -28,7 +49,7 @@ namespace Library.Infrastructure.Migrations
                     BookId = table.Column<int>(type: "int", nullable: false),
                     IssuedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateReturned = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateReturned = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BorrowedStatus = table.Column<bool>(type: "bit", nullable: false),
                     DaysOfDelay = table.Column<int>(type: "int", nullable: false),
                     OverdueFine = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -67,14 +88,11 @@ namespace Library.Infrastructure.Migrations
             migrationBuilder.DropTable(
                 name: "Borrowed");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "Books",
-                type: "nvarchar(100)",
-                maxLength: 100,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+            migrationBuilder.DropTable(
+                name: "Books");
+
+            migrationBuilder.DropTable(
+                name: "Readers");
         }
     }
 }

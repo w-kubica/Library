@@ -12,6 +12,8 @@ namespace Library.Infrastructure.Data.Configurations
             builder.HasKey(x => x.Id);
             builder.HasOne(b => b.Book);
             builder.HasOne(r => r.Reader);
+            builder.Property(x => x.BookId).IsRequired();
+            builder.Property(x => x.ReaderId).IsRequired();
         }
     }
 }

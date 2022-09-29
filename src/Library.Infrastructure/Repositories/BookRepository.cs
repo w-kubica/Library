@@ -14,6 +14,7 @@ namespace Library.Infrastructure.Repositories
         {
             _context = context;
         }
+
         public async Task<IEnumerable<Book>> GetAllAsync()
         {
             var books = await _context.Books.ToListAsync();
@@ -39,7 +40,6 @@ namespace Library.Infrastructure.Repositories
             _context.Books.Update(dto);
             await _context.SaveChangesAsync();
         }
-
         public async Task DeleteAsync(Book book)
         {
             var dto = book.ToInfrastructure();

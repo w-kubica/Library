@@ -18,11 +18,11 @@ public class ReaderTypeHelper
         var employeeRole = new List<ReaderType>();
         employeeRole.Add(ReaderType.Employee);
 
-
         var rolesDic = new Dictionary<int, List<ReaderType>>();
         rolesDic.Add((int)ReaderType.Student, studentRole);
         rolesDic.Add((int)ReaderType.Lecturer, lectureRole);
         rolesDic.Add((int)ReaderType.Employee, employeeRole);
+
         return rolesDic;
     }
     public static bool Assign(Dictionary<int, List<ReaderType>> rolesDic, int existingRole, ReaderType newRole, Reader reader)
@@ -39,14 +39,11 @@ public class ReaderTypeHelper
             }
             else
             {
-                //todo:poprawić zwracać z tej metody bool 
-                //throw new Exception("A role cannot be changed. Incorrect data.");
                 isAssign = false;
             }
         }
         else
         {
-            //throw new Exception("Wrong data on the database.");
             isAssign = false;
         }
         return isAssign;

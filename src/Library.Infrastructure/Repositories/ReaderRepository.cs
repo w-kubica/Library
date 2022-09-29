@@ -33,7 +33,6 @@ namespace Library.Infrastructure.Repositories
             await _context.Readers.AddAsync(dto);
             await _context.SaveChangesAsync();
         }
-
         public async Task DeleteAsync(Reader reader)
         {
             var dto = reader.ToInfrastructure();
@@ -48,6 +47,5 @@ namespace Library.Infrastructure.Repositories
             _context.Readers.Update(dto);
             await _context.SaveChangesAsync();
         }
-
     }
 }

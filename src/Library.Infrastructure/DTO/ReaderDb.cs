@@ -1,16 +1,12 @@
 ﻿using Library.Domain.Models;
-using System.ComponentModel.DataAnnotations;
 
 namespace Library.Infrastructure.DTO
 {
     public class ReaderDb
     {
-        [Key]
         public int Id { get; set; }
-        [Required]
         public string? Pesel { get; set; }
-
-        public List<BorrowedDb> Borrowed { get; set; } = new List<BorrowedDb>();
+        public List<BorrowedDb> Borrowed { get; set; } = new();
 
         public ReaderType ReaderType { get; set; }
 
@@ -29,6 +25,4 @@ namespace Library.Infrastructure.DTO
 
         }
     }
-
-
 }

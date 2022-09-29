@@ -9,6 +9,5 @@ namespace Library.Application.Services.Interfaces
         Task AddBookAsync(CreateBookDto book);
         Task UpdateBookAsync(UpdateBookDto book);
         Task DeleteBookAsync(int id);
-
     }
 }

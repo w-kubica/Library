@@ -9,6 +9,5 @@ namespace Library.Application.Services.Interfaces
         Task AddReaderAsync(CreateReaderDto reader);
         Task UpdateReaderAsync(UpdateReaderDto reader);
         Task DeleteReaderAsync(int id);
-
     }
 }

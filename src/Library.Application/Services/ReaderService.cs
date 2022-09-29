@@ -14,6 +14,7 @@ namespace Library.Application.Services
         {
             _readerRepository = readerRepository;
         }
+
         public async Task<IEnumerable<ReaderDto>> GetAllReadersAsync()
         {
             var readers = await _readerRepository.GetAllAsync();
@@ -51,8 +52,6 @@ namespace Library.Application.Services
             }
             await _readerRepository.AddAsync(newReader);
         }
-
-
 
         public async Task UpdateReaderAsync(UpdateReaderDto reader)
         {

@@ -15,6 +15,7 @@ namespace Library.Infrastructure.Repositories
             _context = context;
 
         }
+
         public async Task<IEnumerable<Borrowed>> GetAllAsync()
         {
             var borrowed = await _context.Borrowed.ToListAsync();

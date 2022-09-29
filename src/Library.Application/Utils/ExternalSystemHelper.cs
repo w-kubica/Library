@@ -1,8 +1,6 @@
-﻿using Library.Application.Services.Interfaces;
-
-namespace Library.Application.Utils
+﻿namespace Library.Application.Utils
 {
-    public class ExternalSystemHelper
+    public static class ExternalSystemHelper
     {
         public static DateTime GetDateReturned(DateTime issuedDate)
         {
@@ -43,6 +41,4 @@ namespace Library.Application.Utils
             return date.Date;
         }
     }
-
-
 }

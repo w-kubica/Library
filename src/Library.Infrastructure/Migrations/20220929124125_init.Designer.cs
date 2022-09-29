@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20220929115532_fgsdhjk")]
-    partial class fgsdhjk
+    [Migration("20220929124125_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,7 +64,7 @@ namespace Library.Infrastructure.Migrations
                     b.Property<bool>("BorrowedStatus")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("DateReturned")
+                    b.Property<DateTime?>("Return")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DaysOfDelay")

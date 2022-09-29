@@ -27,6 +27,7 @@
             }
             return result;
         }
+
         private static bool IsDigit(this string input)
         {
             bool result = true;
@@ -40,6 +41,7 @@
             }
             return result;
         }
+
         private static int CalculateControlSum(string input, int[] weights, int offset = 0)
         {
             int controlSum = 0;
@@ -49,6 +51,5 @@
             }
             return controlSum;
         }
-
     }
 }

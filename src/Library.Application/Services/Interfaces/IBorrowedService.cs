@@ -9,6 +9,5 @@ namespace Library.Application.Services.Interfaces
         Task AddBorrowedAsync(CreateBorrowedDto borrowed);
         Task UpdateBorrowedAsync(UpdateBorrowedDto borrowed);
         Task DeleteBorrowedAsync(int id);
-
     }
 }

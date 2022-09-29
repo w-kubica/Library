@@ -1,5 +1,4 @@
-﻿using Library.Application.Services.Interfaces;
-using Library.Domain.Models;
+﻿using Library.Domain.Models;
 
 namespace Library.Application.Utils
 {
@@ -37,6 +36,7 @@ namespace Library.Application.Utils
 
             return overdueFine;
         }
+
         private static decimal ForEmployees(int daysOfDelay)
         {
             decimal overdueFine;
@@ -48,7 +48,6 @@ namespace Library.Application.Utils
             {
                 overdueFine = daysOfDelay * 5;
             }
-
             return overdueFine;
         }
 
@@ -72,7 +71,6 @@ namespace Library.Application.Utils
             {
                 overdueFine = daysOfDelay * 10;
             }
-
             return overdueFine;
         }
 
@@ -95,7 +93,6 @@ namespace Library.Application.Utils
             {
                 overdueFine = daysOfDelay * 10;
             }
-
             return overdueFine;
         }
     }

@@ -62,7 +62,7 @@ namespace Library.Infrastructure.Migrations
                     b.Property<bool>("BorrowedStatus")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("DateReturned")
+                    b.Property<DateTime?>("Return")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DaysOfDelay")
@@ -77,7 +77,7 @@ namespace Library.Infrastructure.Migrations
                     b.Property<DateTime>("IssuedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("OverdueFineHelper")
+                    b.Property<decimal>("OverdueFine")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ReaderId")
